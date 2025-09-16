@@ -1,22 +1,7 @@
-import { Page, Locator } from '@playwright/test';
-import { BasePage } from '../base.page';
-// example of a module
-export class DealsPage extends BasePage {
-  readonly dealsMenuItem: Locator;
-  readonly repositorySubmenu: Locator;
-  readonly draftRadio: Locator;
-  readonly dealLink_682: Locator;
-  readonly createDeal: Locator;
-  readonly RoamingPartner: Locator;
-  readonly selectOperators: Locator;
-  readonly Click_To_Select: Locator;
-  readonly Select_RoamSmart: Locator;
-  readonly Digicel_Limited: Locator;
-  readonly Confirm: Locator;
-  readonly Save: Locator;
-  readonly dealsrepositorySubmenu: Locator;
+import { BasePage } from '../base.page.js';
 
-  constructor(page: Page) {
+export class DealsPage extends BasePage {
+  constructor(page) {
     super(page);
     this.dealsMenuItem = page.getByRole('listitem').filter({ hasText: 'Deals Dashboard Repository' }).locator('span');
     this.repositorySubmenu = page.locator('li:nth-child(2) > .sidebar__submenu > li:nth-child(2) > .sidebar__submenu-link');
@@ -36,18 +21,18 @@ export class DealsPage extends BasePage {
   async navigateToDealsRepository() {
     await this.dealsMenuItem.click();
     await this.repositorySubmenu.click();
-    // await this.draftRadio.check();
   }
-  async CreateNewDeal(){
+
+  async CreateNewDeal() {
     await this.dealsMenuItem.click();
     await this.dealsrepositorySubmenu.click();
     await this.createDeal.click();
     await this.RoamingPartner.click();
     await this.selectOperators.click();
     await this.Click_To_Select.click();
-    await this.Select_RoamSmart.click({force: true});
-    await this.Confirm.click({force: true});
+    await this.Select_RoamSmart.click({ force: true });
+    await this.Confirm.click({ force: true });
     await this.Save.click();
     await this.page.waitForTimeout(2000);
   }
-}
+} 

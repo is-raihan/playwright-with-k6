@@ -1,20 +1,14 @@
-import { Page, Locator } from '@playwright/test';
-import { BasePage } from '../base.page';
-import {BASE_URL, TEST_DATA} from "../../utils/env";
-// This class represents the login page of the application.
-// It contains methods to interact with the login form and perform login actions.
+import { BasePage } from '../base.page.js';
+import { BASE_URL, TEST_DATA } from '../../utils/env.js';
 
 export class LoginPage extends BasePage {
-  readonly usernameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginButton: Locator;
-
-  constructor(page: Page) {
+  constructor(page) {
     super(page);
     this.usernameInput = page.getByRole('textbox', { name: 'Username:' });
     this.passwordInput = page.getByRole('textbox', { name: 'Password:' });
     this.loginButton = page.getByRole('button', { name: 'Login' });
   }
+
   async navigate() {
     await this.page.goto(`${BASE_URL}`);
   }
@@ -25,4 +19,4 @@ export class LoginPage extends BasePage {
     await this.loginButton.click();
     await this.waitForLoadState();
   }
-}
+} 

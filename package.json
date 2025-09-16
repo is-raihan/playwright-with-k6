@@ -9,7 +9,7 @@
     "test:ui": "playwright test --ui",
     "test:chromium": "playwright test --project=chromium",
     "test:report": "playwright show-report",
-    "test:setup": "playwright test tests/setup/auth.setup.ts",
+    "test:setup": "playwright test tests/setup/auth.setup.js",
     "test:debug": "playwright test --debug",
     "test:debug:ui": "playwright test --headed --debug --ui",
     "test:debug:headed": "playwright test --headed --debug",
@@ -23,15 +23,13 @@
     "test:prod": "cross-env NODE_ENV=prod npx playwright test --headed"
   },
   "keywords": [],
-  "author": "shikder shondhi",
+  "author": "Raihan Khan",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.18",
+    "@playwright/test": "^1.55.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.5.0",
-    "typescript": "^5.8.3"
+    "dotenv": "^16.5.0"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
@@ -39,7 +37,6 @@
     "allure-playwright": "^3.2.2",
     "playwright_js": "file:",
     "playwright-lighthouse": "^4.0.0",
-    "playwright-mail-reporter": "^0.0.8",
-    "typescript": "^5.8.3"
+    "playwright-mail-reporter": "^0.0.8"
   }
 }
