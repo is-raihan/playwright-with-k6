@@ -141,5 +141,5 @@ k6 run tests/performance/load/load-test.js
 k6 run tests/performance/spike/spike-test.js
 
 # With environment variables
-k6 run -e BASE_URL=https://yourapp.com tests/performance/load/
+k6 run -e BASE_URL=https://yourapp.com/tests/performance/load/
 ```

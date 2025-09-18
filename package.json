@@ -34,7 +34,13 @@
     "test:stage": "cross-env NODE_ENV=stage npx playwright test --headed",
     "test:prod": "cross-env NODE_ENV=prod npx playwright test --headed"
   },
-  "keywords": ["playwright", "testing", "e2e", "allure", "reporting"],
+  "keywords": [
+    "playwright",
+    "testing",
+    "e2e",
+    "allure",
+    "reporting"
+  ],
   "author": "Raihan Khan",
   "license": "ISC",
   "type": "module",
@@ -42,6 +48,7 @@
     "@playwright/test": "^1.55.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
+    "ortoni-report": "^4.0.0",
     "rimraf": "^5.0.0"
   },
   "dependencies": {
