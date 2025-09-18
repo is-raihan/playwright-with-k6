@@ -1,94 +1,145 @@
-# Playwright + k6 (JavaScript / ESM)
+# 🎭 Playwright + k6 Testing Framework
 
-Modern Playwright E2E tests with JavaScript (ESM) and environment-driven config.
+> **Modern E2E and Performance Testing Suite** with JavaScript (ESM), multi-environment support, and comprehensive reporting.
 
-### Requirements
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+[![Playwright](https://img.shields.io/badge/Playwright-Latest-orange.svg)](https://playwright.dev/)
+[![k6](https://img.shields.io/badge/k6-Performance-purple.svg)](https://k6.io/)
 
-- Node.js 18+
-- NPM 9+
+## 🚀 Quick Start
 
-### Install
+### Prerequisites
+
+- **Node.js** 18+
+- **npm** 9+
+- **k6** (for performance testing) - [Installation Guide](https://k6.io/docs/getting-started/installation/)
+
+### Installation
 
 ```bash
-npm i
+# Clone the repository
+git clone <your-repo-url>
+cd playwright-with-k6
+
+# Install dependencies
+npm install
+
+# Install Playwright browsers
 npx playwright install
 ```
 
-### Environments
+## 🏗️ Project Architecture
 
-- Env files live in `env/` as `.env.dev`, `.env.stage`, `.env.prod`
-- Switch via `NODE_ENV` (defaults to `dev`)
-- Required variables:
-  - `BASE_URL` (used as base URL in tests)
-  - `HOME_URL` (landing page used by specs)
-
-Example: `env/.env.dev`
-
-```bash
-BASE_URL=https://yourprojectloginpagedev.com/
-HOME_URL=https://yourprojecthomepagedev/homepage/
+```
+playwright-with-k6/
+├── 📁 env/                     # Environment configurations
+│   ├── .env.dev
+│   ├── .env.stage
+│   └── .env.prod
+├── 📁 fixtures/               # Test data files
+│   ├── dev.json
+│   ├── stage.json
+│   └── prod.json
+├── 📁 pages/                  # Page Object Models
+│   ├── base.page.js          # Base page class
+│   ├── index.js              # Page aggregator
+│   ├── 📁 auth/
+│   │   └── login.page.js
+│   ├── 📁 adminpanel/
+│   │   └── admin.page.js
+│   ├── 📁 budgets/
+│   │   └── budget.page.js
+│   └── 📁 deals/
+│       └── deals.page.js
+├── 📁 tests/
+│   ├── 📁 e2e/               # End-to-end tests
+│   │   ├── 📁 deals/
+│   │   │   ├── createNewDeal.spec.js
+│   │   │   └── dealsFlow.spec.js
+│   │   └── 📁 login/
+│   └── 📁 performance/       # k6 performance tests
+│       ├── 📁 load/
+│       │   └── load-test.js
+│       └── 📁 spike/
+│           └── spike-test.js
+├── 📁 utils/
+│   └── env.js                # Environment utilities
+├── playwright.config.js      # Playwright configuration
+├── package.json
+└── README.md
 ```
 
-### Scripts
+## 🌍 Environment Configuration
+
+### Environment Variables
+
+Create environment-specific files in the `env/` directory:
+
+```bash
+# env/.env.dev
+BASE_URL=https://dev.yourapp.com
+HOME_URL=https://dev.yourapp.com/dashboard
+```
+
+```bash
+# env/.env.stage
+BASE_URL=https://staging.yourapp.com
+HOME_URL=https://staging.yourapp.com/dashboard
+```
+
+### Test Data Fixtures
+
+Configure test data in `fixtures/` directory:
+
+```json
+// fixtures/dev.json
+{
+  "credentials": {
+    "validUser": {
+      "username": "testuser",
+      "password": "testpass"
+    }
+  },
+  "testData": {
+    "dealAmount": 1000,
+    "budgetLimit": 5000
+  }
+}
+```
+
+## 🧪 Running Tests
+
+### E2E Tests (Playwright)
 
 ```bash
 # Run all tests (headless)
 npm test
 
-# Headed mode
+# Run tests in headed mode (see browser)
 npm run test:headed
 
-# UI mode
+# Interactive UI mode
 npm run test:ui
 
-# Per-environment (headed)
-npm run test:dev
-npm run test:stage
-npm run test:prod
+# Environment-specific test runs
+npm run test:dev     # Development environment
+npm run test:stage   # Staging environment  
+npm run test:prod    # Production environment
 
-# Show last HTML report
-npm run test:report
+# Run specific browser
+npm run test:chromium
 ```
 
-### Project structure (key files)
-
-```
-pages/
-  base.page.js
-  index.js
-  auth/
-    login.page.js
-  adminpanel/
-    admin.page.js
-  deals/
-    deals.page.js
-  budgets/
-    budget.page.js
-
-tests/
-  e2e/
-    deals/
-      createNewDeal.spec.js
-      dealsFlow.spec.js
-
-utils/
-  env.js
-
-playwright.config.js
-```
-
-### Notes
-
-- The project uses ESM: `"type": "module"` in `package.json`.
-- `utils/env.js` loads `.env.${NODE_ENV}` and `fixtures/${NODE_ENV}.json`.
-- Base URL in Playwright config comes from `process.env.BASE_URL`.
-
-### Useful commands
+### Performance Tests (k6)
 
 ```bash
-# List discovered tests
-npx playwright test -c ./playwright.config.js --list
+# Load testing
+k6 run tests/performance/load/load-test.js
 
-# Debug a single test (headed)
-npx playwright test tests/e2e/deals/createNewDeal.spec.js --headed --project=chromium
+# Spike testing
+k6 run tests/performance/spike/spike-test.js
+
+# With environment variables
+k6 run -e BASE_URL=https://yourapp.com tests/performance/load/
 ```
