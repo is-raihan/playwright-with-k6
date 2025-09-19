@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 const envFile = `.env.${process.env.NODE_ENV || "dev"}`;
 dotenv.config({ path: path.resolve(__dirname, "env", envFile) });
 
+
 // ---- Reporter setup ----
 const ortoniConfig = {
   open: process.env.CI ? "never" : "always",
