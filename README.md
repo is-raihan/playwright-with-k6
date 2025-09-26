@@ -59,10 +59,16 @@ playwright-with-k6/
 │   │   │   └── dealsFlow.spec.js
 │   │   └── 📁 login/
 │   └── 📁 performance/       # k6 performance tests
+│   |   ├── 📁 load/
+│   |    │   └── load-test.js
+│   |    └── 📁 spike/
+│   |        └── spike-test.js
+  └── 📁 api/       # api tests
 │       ├── 📁 load/
 │       │   └── load-test.js
 │       └── 📁 spike/
 │           └── spike-test.js
+
 ├── 📁 utils/
 │   └── env.js                # Environment utilities
 ├── playwright.config.js      # Playwright configuration
