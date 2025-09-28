@@ -2,23 +2,18 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 
 const env = process.env.NODE_ENV || 'dev';
+// const env = process.env.NODE_ENV || 'stage';
+// const env = process.env.NODE_ENV || 'prod';
 config({ path: resolve(__dirname, `../env/.env.${env}`) });
 
-function requireString(name: string): string {
-  const val = process.env[name];
-  if (!val || typeof val !== 'string' || val.trim() === '') {
-    throw new Error(`Missing required environment variable: ${name}. Ensure env/.env.${env} defines ${name}.`);
-  }
-  return val;
-}
+export const baseUrl = process.env.BASE_URL || 'https://dev.pippasync.customeradmin.boostonamazon.com';
+export const validemail = process.env.EMAIL || 'admin@admin.com';
+export const validpassword = process.env.PASSWORD || '12345678';
+export const invalidemail = process.env.INVALID_EMAIL || 'invalid@admin.com';
+export const invalidpassword = process.env.INVALID_PASSWORD || 'invali##Password123';
 
-// Normalize base URL to have no trailing slash for consistent path joining
-function normalizeBaseUrl(url: string): string {
-  return url.replace(/\/$/, '');
-}
-
-export const baseUrl: string = normalizeBaseUrl(requireString('BASE_URL'));
-export const validemail: string = requireString('EMAIL');
-export const validpassword: string = requireString('PASSWORD');
-export const invalidemail: string = requireString('INVALID_EMAIL');
-export const invalidpassword: string = requireString('INVALID_PASSWORD');
+// export const baseUrl = process.env.BASE_URL;
+// export const validemail = process.env.EMAIL;
+// export const validpassword = process.env.PASSWORD;
+// export const invalidemail = process.env.INVALID_EMAIL;
+// export const invalidpassword = process.env.INVALID_PASSWORD;

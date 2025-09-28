@@ -1,151 +1,294 @@
-# 🎭 Playwright + k6 Testing Framework
+# PippaSync
 
-> **Modern E2E and Performance Testing Suite** with JavaScript (ESM), multi-environment support, and comprehensive reporting.
+A Playwright-based test automation project for testing the PippaSync application.
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
-[![Playwright](https://img.shields.io/badge/Playwright-Latest-orange.svg)](https://playwright.dev/)
-[![k6](https://img.shields.io/badge/k6-Performance-purple.svg)](https://k6.io/)
+## Folder Structure
 
-## 🚀 Quick Start
+```
+├── 📁 .github/
+│   └── 📁 workflows/
+│       └── ⚙️ playwright.yml
+├── 📁 env/ 🚫 (contains `.env.dev`, `.env.stage`, `.env.prod`)
+├── 📁 fixtures/
+│   ├── 📄 dev.json
+│   ├── 📄 prod.json
+│   └── 📄 stage.json
+├── 📁 node_modules/ 🚫
+├── 📁 pages/
+│   ├── 📁 auth-services/
+│   │   └── 📄 signIn.page.ts
+│   ├── 📄 base.page.ts
+│   └── 📄 index.ts
+├── 📁 playwright-report/ 🚫
+├── 📁 test-results/ 🚫
+├── 📁 tests/
+│   └── 📁 auth-services/
+│       └── 📄 signIn.spec.ts
+├── 📁 utils/
+│   └── 📄 env.ts
+├── 🚫 .gitignore
+├── 📖 README.md
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 playwright.config.js
+└── �� tsconfig.json
+```
 
-### Prerequisites
+## Prerequisites
 
-- **Node.js** 18+
-- **npm** 9+
-- **k6** (for performance testing) - [Installation Guide](https://k6.io/docs/getting-started/installation/)
+- Node.js v18+ (required by Playwright 1.55)
+- npm v8+
+- Git
 
-### Installation
+## Setup
 
+1. Clone and enter the project:
 ```bash
-# Clone the repository
-git clone <your-repo-url>
-cd playwright-with-k6
+git clone <repository-url>
+cd pippasync
+```
 
-# Install dependencies
+2. Install dependencies:
+```bash
 npm install
+```
 
-# Install Playwright browsers
+3. Install Playwright browsers:
+```bash
 npx playwright install
 ```
 
-## 🏗️ Project Architecture
+## Environment Configuration
 
-```
-playwright-with-k6/
-├── 📁 env/                     # Environment configurations
-│   ├── .env.dev
-│   ├── .env.stage
-│   └── .env.prod
-├── 📁 fixtures/               # Test data files
-│   ├── dev.json
-│   ├── stage.json
-│   └── prod.json
-├── 📁 pages/                  # Page Object Models
-│   ├── base.page.js          # Base page class
-│   ├── index.js              # Page aggregator
-│   ├── 📁 auth/
-│   │   └── login.page.js
-│   ├── 📁 adminpanel/
-│   │   └── admin.page.js
-│   ├── 📁 budgets/
-│   │   └── budget.page.js
-│   └── 📁 deals/
-│       └── deals.page.js
-├── 📁 tests/
-│   ├── 📁 e2e/               # End-to-end tests
-│   │   ├── 📁 deals/
-│   │   │   ├── createNewDeal.spec.js
-│   │   │   └── dealsFlow.spec.js
-│   │   └── 📁 login/
-│   └── 📁 performance/       # k6 performance tests
-│   |   ├── 📁 load/
-│   |    │   └── load-test.js
-│   |    └── 📁 spike/
-│   |        └── spike-test.js
-  └── 📁 api/       # api tests
-│       ├── 📁 load/
-│       │   └── load-test.js
-│       └── 📁 spike/
-│           └── spike-test.js
+- Runtime environment is selected by `NODE_ENV`:
+  - Supported: `dev` (default), `stage`, `prod`
+- `utils/env.ts` uses `dotenv` to load `env/.env.<NODE_ENV>`.
 
-├── 📁 utils/
-│   └── env.js                # Environment utilities
-├── playwright.config.js      # Playwright configuration
-├── package.json
-└── README.md
-```
+Required variables (they have defaults in code, but set them explicitly for real runs):
+- `BASE_URL`
+- `EMAIL`, `PASSWORD`
+- `INVALID_EMAIL`, `INVALID_PASSWORD`
 
-## 🌍 Environment Configuration
-
-### Environment Variables
-
-Create environment-specific files in the `env/` directory:
-
+Example `env/.env.dev`:
 ```bash
-# env/.env.dev
-BASE_URL=https://dev.yourapp.com
-HOME_URL=https://dev.yourapp.com/dashboard
+BASE_URL=https://dev.pippasync.customeradmin.boostonamazon.com
+EMAIL=admin@admin.com
+PASSWORD=12345678
+INVALID_EMAIL=invalid@admin.com
+INVALID_PASSWORD=invali##Password123
 ```
 
+Switch environments:
 ```bash
-# env/.env.stage
-BASE_URL=https://staging.yourapp.com
-HOME_URL=https://staging.yourapp.com/dashboard
+# dev (default)
+NODE_ENV=dev npm test
+
+# stage
+NODE_ENV=stage npm test
+
+# prod
+NODE_ENV=prod npm test
 ```
 
-### Test Data Fixtures
+## How to Run Tests
 
-Configure test data in `fixtures/` directory:
+- Run all tests:
+```bash
+npm test
+```
+
+- Run headed (see browser UI):
+```bash
+npm run test:headed
+```
+
+- Playwright UI mode:
+```bash
+npm run test:ui
+```
+
+- Run a single spec:
+```bash
+npx playwright test tests/auth-services/signIn.spec.ts
+```
+
+- Run by project/browser:
+```bash
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=webkit
+```
+
+- Run tests matching a title:
+```bash
+npx playwright test -g "sign in"
+```
+
+- Increase workers locally (defaults to CPU cores):
+```bash
+npx playwright test --workers=4
+```
+
+## Reports and Artifacts
+
+- HTML report:
+```bash
+npx playwright show-report
+```
+  - Output stored under `playwright-report/`.
+
+- Traces:
+  - `trace: "on-first-retry"` in `playwright.config.js`.
+  - View traces from the HTML report or via:
+```bash
+npx playwright show-trace <path-to-trace.zip>
+```
+
+## Junior-Friendly Data Flow (Sign-in)
+
+- Big picture:
+  - Tests call Page Objects → Page Objects use locators/actions → Env/config provide URLs and credentials → Assertions verify outcomes.
+
+- Configuration (`playwright.config.js`):
+  - `testDir: "./tests"`
+  - `use.baseURL` from `utils/env.ts` (`baseUrl`)
+  - Projects: `chromium`, `firefox`, `webkit`
+  - `retries`/`workers` adapt to CI via `process.env.CI`
+  - Reporter: `html`
+
+- Environment loader (`utils/env.ts`):
+  - Reads `NODE_ENV` (defaults to `dev`)
+  - Loads `env/.env.<env>` using `dotenv`
+  - Exposes:
+    - `baseUrl`, `validemail`, `validpassword`, `invalidemail`, `invalidpassword`
+
+- Page Object Model:
+  - `pages/base.page.ts`:
+    - Wraps the Playwright `page` and provides `navigateTo(url)`.
+  - `pages/auth-services/signIn.page.ts`:
+    - Extends `BasePage`
+    - Locators:
+      - `input[name="email"]`, `input[name="password"]`, `button:has-text("Sign In")`
+    - Flows:
+      - `navigate()`: `page.goto(baseUrl)`
+      - `validsignIn()`: fills valid creds, clicks, expects `toHaveURL(baseUrl)`
+      - `invalidsignIn()`: fills invalid creds, clicks (assertion to be added as needed)
+
+- Tests (`tests/auth-services/signIn.spec.ts`):
+  - Creates `SignInPage(page)`
+  - Calls `validsignIn()` for the happy path
+  - Calls `invalidsignIn()` for the negative path
+
+- Execution sequence (valid sign-in):
+  1. Test runner initializes and passes a `page` to the test.
+  2. Test constructs `SignInPage`.
+  3. `validsignIn()`:
+     - Navigates to `baseUrl` from env.
+     - Fills `EMAIL` and `PASSWORD` from env.
+     - Clicks Sign In.
+     - Verifies final URL (currently `baseUrl`).
+  4. Artifacts are captured on retries; report is generated.
+
+Tip: If your app redirects after login, update the assertion:
+```ts
+await expect(page).toHaveURL('<post-login URL>');
+```
+
+## Using Fixtures (Test Data)
+
+- JSON files in `fixtures/` can be imported in tests:
+```ts
+import devData from '../fixtures/dev.json';
+// Use devData.someField in your test
+```
+
+- Or load based on `NODE_ENV`:
+```ts
+import devData from '../fixtures/dev.json';
+import stageData from '../fixtures/stage.json';
+import prodData from '../fixtures/prod.json';
+
+const env = process.env.NODE_ENV ?? 'dev';
+const data = env === 'prod' ? prodData : env === 'stage' ? stageData : devData;
+```
+
+- Keep secrets in `.env.*`; keep non-sensitive test data in `fixtures/*.json`.
+
+## Conventions
+
+- Tests live under `tests/**`, grouped by domain (e.g., `auth-services`).
+- Page Objects live under `pages/**` mirroring the test structure.
+- Re-export page objects from `pages/index.ts` for cleaner imports.
+- Prefer role/text selectors where stable; update selectors only in Page Objects.
+- One assertion per behavior where possible; keep tests readable and deterministic.
+
+## Debugging
+
+- Headed + slow motion:
+```bash
+PWDEBUG=1 npx playwright test --headed --project=chromium
+```
+
+- Pause in UI:
+```ts
+// in a test
+await page.pause();
+```
+
+- Console logs:
+  - Use `console.log` sparingly to trace flow in tests.
+  - Use `test.step(name, fn)` to group operations in reports.
+
+- Retry a single failing test with trace:
+```bash
+npx playwright test -g "should sign in successfully" --retries=1
+```
+
+## CI Notes
+
+- A workflow exists at `.github/workflows/playwright.yml`.
+- Typical CI adjustments:
+  - `CI=true` sets `forbidOnly`, increases `retries`, and limits `workers` to `1`.
+  - Provide secrets as environment variables in CI (e.g., `BASE_URL`, `EMAIL`, `PASSWORD`).
+  - Cache `~/.cache/ms-playwright` or run `npx playwright install --with-deps` in CI images.
+
+## Scripts (from `package.json`)
 
 ```json
-// fixtures/dev.json
 {
-  "credentials": {
-    "validUser": {
-      "username": "testuser",
-      "password": "testpass"
-    }
-  },
-  "testData": {
-    "dealAmount": 1000,
-    "budgetLimit": 5000
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui"
   }
 }
 ```
 
-## 🧪 Running Tests
+## Troubleshooting
 
-### E2E Tests (Playwright)
-
+- Ensure Node >= 18:
 ```bash
-# Run all tests (headless)
-npm test
-
-# Run tests in headed mode (see browser)
-npm run test:headed
-
-# Interactive UI mode
-npm run test:ui
-
-# Environment-specific test runs
-npm run test:dev     # Development environment
-npm run test:stage   # Staging environment  
-npm run test:prod    # Production environment
-
-# Run specific browser
-npm run test:chromium
+node -v
 ```
 
-### Performance Tests (k6)
-
+- Reinstall browsers:
 ```bash
-# Load testing
-k6 run tests/performance/load/load-test.js
-
-# Spike testing
-k6 run tests/performance/spike/spike-test.js
-
-# With environment variables
-k6 run -e BASE_URL=https://yourapp.com/tests/performance/load/
+npx playwright install
 ```
+
+- Clear reports/artifacts:
+```bash
+rm -rf playwright-report test-results
+```
+
+- Wrong environment loaded:
+  - Confirm `NODE_ENV` and that `env/.env.<env>` exists and has correct variables.
+
+- Selectors fail:
+  - Update locators in the Page Object (`signIn.page.ts`) rather than in tests.
+
+## Next Steps
+
+- Add post-login URL assertion if applicable.
+- Expand negative tests to assert specific error messages.
+- Add more page objects and specs following the same structure.

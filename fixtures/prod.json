@@ -1,8 +1,8 @@
 {
-  "credentials": {  
-      "validUser": {
-      "username": "username",
-      "password": "password"
+  "users": [
+    {
+      "email": "admin@admin.com",
+      "password": "12345678"
     }
-  }
+  ]
 }
