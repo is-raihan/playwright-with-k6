@@ -20,7 +20,7 @@
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/node": "^22.18.0",
-    "ortoni-report": "^4.0.0"
+    "ortoni-report": "^4.0.1"
   },
   "dependencies": {
     "dotenv": "^17.2.1"
