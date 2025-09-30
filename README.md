@@ -4,35 +4,82 @@ A Playwright-based test automation project for testing the PippaSync application
 
 ## Folder Structure
 
+# File Tree: playwright-with-k6
+
+Generated on: 9/30/2025, 11:53:12 AM
+Root path: `/Users/ecomclips/Documents/eclipse-projects/Test/playwright-with-k6`
+
 ```
-├── 📁 .github/
-│   └── 📁 workflows/
-│       └── ⚙️ playwright.yml
-├── 📁 env/ 🚫 (contains `.env.dev`, `.env.stage`, `.env.prod`)
-├── 📁 fixtures/
-│   ├── 📄 dev.json
-│   ├── 📄 prod.json
-│   └── 📄 stage.json
-├── 📁 node_modules/ 🚫
-├── 📁 pages/
-│   ├── 📁 auth-services/
-│   │   └── 📄 signIn.page.ts
-│   ├── 📄 base.page.ts
-│   └── 📄 index.ts
-├── 📁 playwright-report/ 🚫
-├── 📁 test-results/ 🚫
-├── 📁 tests/
-│   └── 📁 auth-services/
-│       └── 📄 signIn.spec.ts
-├── 📁 utils/
-│   └── 📄 env.ts
-├── 🚫 .gitignore
-├── 📖 README.md
-├── 📄 package-lock.json
-├── 📄 package.json
-├── 📄 playwright.config.js
-└── �� tsconfig.json
+├── .git/ 🚫 (auto-hidden)
+├── .idea/ 🚫 (auto-hidden)
+├── env/ 🚫 (auto-hidden)
+├── fixtures/
+│   ├── dev.json
+│   ├── prod.json
+│   └── stage.json
+├── node_modules/ 🚫 (auto-hidden)
+├── ortoni-report/
+│   ├── ortoni-data/
+│   │   └── attachments/
+│   │       ├── 427269f70a03218eb4b5-8c59c83b0f526df2fd7b/
+│   │       ├── 96146a701106d08e8ca0-75152c6a9833ad0da3fd/
+│   │       └── 96146a701106d08e8ca0-d3e3c813845f7fc334d2/
+│   ├── trace/
+│   │   ├── assets/
+│   │   │   ├── codeMirrorModule-B9MwJ51G.js
+│   │   │   └── defaultSettingsView-Do_wwdKw.js
+│   │   ├── codeMirrorModule.C3UTv-Ge.css
+│   │   ├── codicon.DCmgc-ay.ttf
+│   │   ├── defaultSettingsView.DVJHpiGt.css
+│   │   ├── index.BFsek2M6.css
+│   │   ├── index.BZPYnuWQ.js
+│   │   ├── index.html
+│   │   ├── playwright-logo.svg
+│   │   ├── snapshot.html
+│   │   ├── sw.bundle.js 🚫 (auto-hidden)
+│   │   ├── uiMode.9zHYMU6d.js
+│   │   ├── uiMode.BatfzHMG.css
+│   │   ├── uiMode.html
+│   │   └── xtermModule.Beg8tuEN.css
+│   ├── ortoni-data-history.sqlite
+│   └── ortoni-report.html
+├── pages/
+│   ├── api/
+│   │   └── auth.api.js
+│   ├── auth-services/
+│   │   └── signIn.page.js
+│   ├── performance/
+│   │   ├── auth.perf.js
+│   │   ├── base.perf.js
+│   │   └── index.js
+│   ├── base.page.js
+│   └── index.js
+├── playwright-report/
+│   └── index.html
+├── test-results/
+│   └── .last-run.json
+├── tests/
+│   ├── api/
+│   │   ├── responses/
+│   │   │   └── login-response.json
+│   │   └── auth.spec.js
+│   ├── e2e/
+│   │   └── auth-services/
+│   │       └── signIn.spec.js
+│   └── perfromance/
+│       ├── results/
+│       └── auth.k6.js
+├── utils/
+│   ├── env.js
+│   └── fixture-loader.js
+├── .DS_Store 🚫 (auto-hidden)
+├── README.md
+├── WARP.md
+├── package-lock.json
+├── package.json
+└── playwright.config.js
 ```
+
 
 ## Prerequisites
 
