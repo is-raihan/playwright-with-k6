@@ -1,21 +1,21 @@
-const { defineConfig } = require('@playwright/test');
-const { baseUrl } = require('./utils/env');
+const { defineConfig } = require("@playwright/test");
+const { baseUrl } = require("./utils/env");
 
 module.exports = defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [['ortoni-report', { title: 'K6 report' }]],
+  reporter: [["ortoni-report", { title: "K6 report", port: 9324 }]],
   use: {
     baseURL: baseUrl,
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { browserName: 'chromium' },
+      name: "chromium",
+      use: { browserName: "chromium" },
     },
     // { name: 'firefox', use: { browserName: 'firefox' } },
     // { name: 'webkit', use: { browserName: 'webkit' } },

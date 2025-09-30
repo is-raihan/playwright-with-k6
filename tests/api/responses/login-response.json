@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "message": "Successfully logged in.",
+  "data": {
+    "user": {
+      "id": 1,
+      "name": "Raihan Khan",
+      "email": "admin@admin.com",
+      "phone": "+8801051021509",
+      "google_id": null,
+      "ebay_user_id": null,
+      "is_active": 1,
+      "reset_token": null,
+      "reset_token_expire_at": null,
+      "created_at": "2025-09-26T12:44:50.000000Z",
+      "updated_at": "2025-09-28T18:34:39.000000Z"
+    },
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDZhYzQ3MzY5YjgxZjFjMmMwZTNmNmVjMjFjNmVkMjJlMmMwNjA0NTcwYjY2ZTFhN2I3MjdmYmIyOWNjZmFkMDQ4NDk4OGExOGNkYjMyMmQiLCJpYXQiOjE3NTkyMTA5MTYuNTk2MzAyOTg2MTQ1MDE5NTMxMjUsIm5iZiI6MTc1OTIxMDkxNi41OTYzMDM5Mzk4MTkzMzU5Mzc1LCJleHAiOjE3OTA3NDY5MTYuNTkxNjI4MDc0NjQ1OTk2MDkzNzUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.W3JsiWNcjGkIZaYCJ0lH732O4UYgCqRkTjjVpb0rI5Z9p9SNZqOWPLnYmISH1uGdSmwClLoB-ULcO37GMjzZs-luUSdHJp7Muxx5lwcgKJ_tUwCkn8pqUnCFkkUQ-buwOUf39BRnJ5dA63-q7TJVrFHsqovJW90cAk9VOLgj_wSoYoQ2bCyiBwl8v7wQ0AHnK7CFdsjG-Hkr65R0Aqle3uesMxdsHboukLVyTRUjKiC3RvpCrf_CLXSX2DGFIEVABbyfiSHs8sK9WJFsTVlmjLgQ8c5RXmMZlKoJPVEnOSOnoABSxFVHe8vyCd4jFZ0PlvcX9WhDNJAWNExqVmafClItNhjKHyW_dsU_xRFT1bRD6-XTVUkzG0Tz594930a7snrG8F3VyWUjIQDY87pj5dDIL3hZaOaOSuM28kbZpUPAwftePI_XfC-Y_gsKgClNBuybDegXNth6LCVIm0dg88UsVc-F_L5nys_eOMMGGPy5gaDdfDOAwVmeO5cmB4KVRakAfqxVuw1CgcEPBWpQdgIkTaPAIwTClvIwAtCbiWkUo36rzAWNWbX6Sqr09RBM1BD-JjKSSduzZ2vnc1CkkGWFi3YN1Vcfz2KJmO8KtbnU1TS2LUevUKsD-y1DnQGsH-GaXxBPMcWIMFORSLN7C2_c72nb-6Nt1CP0tv7InaI",
+    "access_token_expire_at": "2025-10-15T05:41:56.607251Z"
+  }
+}
