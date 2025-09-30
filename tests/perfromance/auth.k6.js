@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { sleep, check } from 'k6';
 import { Trend, Rate, Counter } from 'k6/metrics';
+import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 
 // Direct imports for k6 compatibility
 import { BasePerformance } from '../../pages/performance/base.perf.js';
@@ -38,6 +39,7 @@ export const options = {
     login_duration: ['p(95)<1300', 'p(99)<1800'], // Realistic login duration thresholds
     failed_requests: ['rate<0.3'],     // Using our custom metric instead
   },
+  summaryTrendStats: ['avg','min','med','max','p(90)','p(95)']
 };
 
 export default function() {
@@ -78,4 +80,12 @@ export default function() {
   
   // Add variable sleep time to reduce server load spikes
   sleep(Math.random() * 2 + 0.5); // Sleep between 0.5 and 2.5 seconds
+}
+
+// Export summary handler for report generation
+export function handleSummary(data) {
+  return {
+    'k6-results/summary.html': htmlReport(data),
+    'k6-results/summary.json': JSON.stringify(data, null, 2)
+  };
 }

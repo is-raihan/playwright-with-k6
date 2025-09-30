@@ -190,6 +190,14 @@ npx playwright test --workers=4
 
 ## Reports and Artifacts
 
+- Playwright reporter: `ortoni-report` is the only reporter configured (see `playwright.config.js`). It serves a local dashboard (default port 9324) and writes artifacts under `ortoni-report/`.
+  - Locally, after tests finish, the Ortoni HTML report auto-opens in your browser (`posttest` hook). In CI, this is skipped.
+  - Manually open anytime:
+
+```bash
+npm run open:ortoni
+```
+
 - HTML report:
 
 ```bash
@@ -333,9 +341,38 @@ npx playwright test -g "should sign in successfully" --retries=1
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "k6": "k6 run tests/perfromance/auth.k6.js",
+    "k6:dev": "NODE_ENV=dev k6 run tests/perfromance/auth.k6.js",
+    "k6:stage": "NODE_ENV=stage k6 run tests/perfromance/auth.k6.js",
+    "k6:prod": "NODE_ENV=prod k6 run tests/perfromance/auth.k6.js"
   }
 }
+```
+
+### Run k6 Performance Tests
+
+This project includes k6 performance tests (especially for auth). Use:
+
+```bash
+npm run k6        # dev by default
+npm run k6:dev
+npm run k6:stage
+npm run k6:prod
+```
+
+Entry: `tests/perfromance/auth.k6.js`. Results are stored under `tests/perfromance/results/` (plus any outputs configured in the script). Ensure the same environment variables used by Playwright are available for k6 runs.
+
+View the generated k6 HTML summary:
+
+```bash
+npm run k6:report
+```
+
+Run both Playwright tests and k6 in one go:
+
+```bash
+npm run test:all
 ```
 
 ## Troubleshooting

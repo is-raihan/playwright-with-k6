@@ -6,10 +6,18 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "posttest": "sh -c 'if [ -z \"$CI\" ] && [ -f ortoni-report/ortoni-report.html ]; then (open ortoni-report/ortoni-report.html || xdg-open ortoni-report/ortoni-report.html || start ortoni-report/ortoni-report.html); fi'",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:debug": "PWDEBUG=1 playwright test",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "open:ortoni": "open ortoni-report/ortoni-report.html || xdg-open ortoni-report/ortoni-report.html || start ortoni-report/ortoni-report.html",
+    "k6": "mkdir -p k6-results && k6 run tests/perfromance/auth.k6.js",
+    "k6:dev": "mkdir -p k6-results && NODE_ENV=dev k6 run tests/perfromance/auth.k6.js",
+    "k6:stage": "mkdir -p k6-results && NODE_ENV=stage k6 run tests/perfromance/auth.k6.js",
+    "k6:prod": "mkdir -p k6-results && NODE_ENV=prod k6 run tests/perfromance/auth.k6.js",
+    "k6:report": "open k6-results/summary.html || xdg-open k6-results/summary.html || start k6-results/summary.html",
+    "test:all": "playwright test && mkdir -p k6-results && k6 run tests/perfromance/auth.k6.js"
   },
   "keywords": [],
   "author": "Raihan Khan",
