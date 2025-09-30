@@ -1,16 +1,22 @@
 const { test, expect } = require('@playwright/test');
 const { SignInPage } = require('../../../pages');
+const { baseUrl } = require('../../../utils/env');
 
 test.describe('Sign In', () => {
-  test('should sign in successfully', async ({ page }) => {
-    const signInPage = new SignInPage(page);
-    await signInPage.validsignIn();
-    console.log('Sign-in test completed successfully.');
+  let signInPage;
+
+  test.beforeEach(async ({ page }) => {
+    signInPage = new SignInPage(page);
+    await page.goto(baseUrl); // if you’ve got a login URL
   });
 
-  test('should sign in unsuccessfully', async ({ page }) => {
-    const signInPage = new SignInPage(page);
-    await signInPage.invalidsignIn();
-    console.log('Sign-in negative test completed.');
+  test('should sign in successfully', async () => {
+    await signInPage.validSignIn();
+    // await expect(signInPage.userAvatar).toBeVisible(); // example assertion
+  });
+
+  test('should fail sign in with invalid creds', async () => {
+    await signInPage.invalidSignIn();
+    // await expect(signInPage.errorMessage).toContainText('Invalid credentials');
   });
 });

@@ -18,7 +18,7 @@ class SignInPage extends BasePage {
   }
 
   // Perform sign-in
-  async validsignIn() {
+  async validSignIn() {
     await this.navigate();
     await this.page.fill(this.emailInput, validemail);
     await this.page.fill(this.passwordInput, validpassword);
@@ -30,7 +30,7 @@ class SignInPage extends BasePage {
     await expect(this.page.getByText('Sign Out')).toBeVisible();
   }
 
-  async invalidsignIn() {
+  async invalidSignIn() {
     await this.navigate();
     await this.page.fill(this.emailInput, invalidemail);
     await this.page.fill(this.passwordInput, invalidpassword);
