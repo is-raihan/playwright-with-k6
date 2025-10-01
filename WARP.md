@@ -1,138 +1,169 @@
-# WARP.md
+# 🚀 WARP Development Guide
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+Quick reference for WARP (warp.dev) when working with this Playwright + K6 test automation project.
 
-## Project Overview
+## 🎯 Project Overview
 
-This is a Playwright-based end-to-end test automation project for testing the PippaSync application. It uses TypeScript and follows the Page Object Model pattern for maintainable test code.
+**PippaSync Test Automation** - Comprehensive testing framework combining:
+- **Playwright**: End-to-end functional testing
+- **K6**: Performance and load testing  
+- **Ortoni**: Advanced reporting and analytics
+- **Multi-Environment**: Dev, Stage, Production support
 
-## Essential Commands
+## ⚡ Quick Commands
 
-### Development Setup
+### Setup & Installation
 ```bash
-# Install dependencies
-npm install
-
-# Install Playwright browsers
-npx playwright install
+npm install && npx playwright install
 ```
 
 ### Running Tests
 ```bash
-# Run all tests
+# All tests
 npm test
 
-# Run with browser UI visible  
+# With browser UI
 npm run test:headed
 
-# Run in Playwright UI mode (interactive)
+# Interactive mode
 npm run test:ui
 
-# Run with debugger
+# Performance tests
+npm run k6
+
+# Everything
+npm run test:all
+```
+
+### Environment Switching
+```bash
+NODE_ENV=dev npm test      # Development
+NODE_ENV=stage npm test   # Staging  
+NODE_ENV=prod npm test     # Production
+```
+
+### Debugging
+```bash
+# Debug mode
 npm run test:debug
-# or
-PWDEBUG=1 npx playwright test
 
-# Run specific test file
-npx playwright test tests/auth-services/signIn.spec.ts
+# Headed debugging
+PWDEBUG=1 npx playwright test --headed
 
-# Run tests by browser
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=webkit
-
-# Run tests matching a pattern
-npx playwright test -g "sign in"
-
-# Run with custom worker count
-npx playwright test --workers=4
+# Specific test
+npx playwright test tests/e2e/auth-services/signIn.spec.js
 ```
 
-### Environment Management
-```bash
-# Run against different environments
-NODE_ENV=dev npm test      # default
-NODE_ENV=stage npm test
-NODE_ENV=prod npm test
-```
+## 🏗️ Architecture
 
-### Reports and Debugging
-```bash
-# View HTML test report
-npm run test:report
-# or
-npx playwright show-report
+### Page Object Model
+- **Base Page**: `pages/base.page.js` - Common functionality
+- **Feature Pages**: Domain-specific page objects
+- **Locators**: CSS selectors with name attributes preferred
+- **Actions**: Encapsulated user interactions
 
-# View trace files
-npx playwright show-trace <path-to-trace.zip>
-
-# Debug with headed mode and slow motion
-PWDEBUG=1 npx playwright test --headed --project=chromium
-```
-
-## Architecture Overview
-
-### Environment Configuration System
-- **Multi-environment support**: Environments are controlled via `NODE_ENV` (dev/stage/prod)
-- **Configuration loading**: `utils/env.ts` uses dotenv to load environment-specific `.env` files from the `env/` directory
-- **Environment isolation**: Each environment has its own configuration file and test data fixtures
-
-### Page Object Model Architecture
-The project follows a strict Page Object Model pattern:
-
-- **Base Page (`pages/base.page.ts`)**: Foundation class providing common page functionality like navigation
-- **Feature Pages**: Extend BasePage and encapsulate page-specific locators, actions, and assertions
-- **Index Exports (`pages/index.ts`)**: Central export point for clean imports across tests
-- **Locator Strategy**: Uses CSS selectors with preference for name attributes and text-based selectors
-
-### Test Data Management
-- **Fixtures**: JSON files in `fixtures/` directory provide environment-specific test data
-- **Environment Variables**: Sensitive data (credentials, URLs) stored in `.env.*` files
-- **Data Isolation**: Each environment (dev/stage/prod) has corresponding fixture and env files
+### Environment System
+- **Multi-Environment**: `NODE_ENV` controls environment
+- **Configuration**: `utils/env.js` loads environment variables
+- **Test Data**: `fixtures/` for environment-specific data
+- **Isolation**: Separate configs per environment
 
 ### Test Organization
-- **Domain-based Structure**: Tests organized by feature domains (e.g., `auth-services/`)
-- **Spec Files**: Test files use `.spec.ts` extension and mirror the page object structure
-- **Parallel Execution**: Tests run in parallel by default with browser-specific projects
+- **E2E Tests**: `tests/e2e/` - User journey testing
+- **API Tests**: `tests/api/` - Backend testing
+- **Performance**: `tests/perfromance/` - K6 load tests
+- **Parallel**: Tests run in parallel by default
 
-## Key Files and Their Purposes
-
-- **`playwright.config.ts`**: Central configuration for test execution, browsers, and environment setup
-- **`utils/env.ts`**: Environment configuration loader and variable exports
-- **`pages/base.page.ts`**: Base class for all page objects with common functionality
-- **`fixtures/*.json`**: Environment-specific test data that's not sensitive
-- **`env/.env.*`**: Environment-specific configuration files (gitignored)
-
-## Development Patterns
-
-### Adding New Page Objects
-1. Create page class extending `BasePage` in appropriate domain folder under `pages/`
-2. Define private locators as class properties
-3. Implement public methods for user actions and verifications
-4. Export from `pages/index.ts`
+## 🔧 Development Patterns
 
 ### Adding New Tests
-1. Create `.spec.ts` file in `tests/` mirroring the page object structure
-2. Import page objects from `pages/` index
-3. Use `test.describe()` for grouping related tests
-4. Follow naming convention: "should [action] [expectation]"
+1. Create page object in `pages/domain/`
+2. Create test file in `tests/e2e/domain/`
+3. Export from `pages/index.js`
+4. Follow naming: "should [action] [expectation]"
 
-### Environment-Specific Development
-- Environment variables are loaded automatically based on `NODE_ENV`
-- Required variables: `BASE_URL`, `EMAIL`, `PASSWORD`, `INVALID_EMAIL`, `INVALID_PASSWORD`
-- Test data can be loaded from corresponding fixture files or environment variables
+### Adding Performance Tests
+1. Create performance class in `pages/performance/`
+2. Create K6 test in `tests/perfromance/`
+3. Update package.json scripts
+4. Set realistic thresholds
 
-### Debugging Practices
-- Use `await page.pause()` to pause execution in UI mode
-- Utilize `test.step()` for better test reporting and organization
-- Leverage trace files for post-execution debugging
-- Console.log sparingly for test flow tracing
+### Environment Variables
+Required in `env/.env.*`:
+- `BASE_URL` - Application URL
+- `EMAIL` / `PASSWORD` - Valid credentials
+- `INVALID_EMAIL` / `INVALID_PASSWORD` - Invalid credentials
 
-## CI/CD Integration
+## 📊 Reporting
 
-The project includes a GitHub Actions workflow (currently commented out in `.github/workflows/playwright.yml`) that:
-- Supports multiple environments via manual dispatch
-- Runs on schedule and PR triggers  
-- Caches Playwright browsers for performance
-- Uploads test artifacts (reports, traces, videos)
-- Uses CI-specific settings (retries, workers, forbidOnly)
+### Report Types
+- **Ortoni**: `npm run open:ortoni` - Advanced analytics
+- **Playwright**: `npm run test:report` - Standard results
+- **K6**: `npm run k6:report` - Performance metrics
+
+### Debugging Tools
+- **Traces**: `npx playwright show-trace <trace.zip>`
+- **Screenshots**: Captured on failures
+- **Videos**: Recorded in headed mode
+- **Console**: Browser console logs
+
+## 🚀 CI/CD Pipeline
+
+### GitHub Actions
+- **Triggers**: Push, PR, Manual dispatch
+- **Jobs**: Playwright tests → K6 tests → Report publishing
+- **Artifacts**: Reports, traces, videos
+- **Pages**: Public report hosting
+
+### Environment Support
+- **Development**: Local testing
+- **Staging**: Pre-production validation
+- **Production**: Live environment testing
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+```bash
+# Browser issues
+npx playwright install
+
+# Environment issues  
+node -e "console.log(require('./utils/env'))"
+
+# Clean artifacts
+npm run clean
+
+# Debug specific test
+npx playwright test --debug tests/e2e/auth-services/signIn.spec.js
+```
+
+### Performance Issues
+- Reduce K6 VU count
+- Check thresholds
+- Monitor memory usage
+- Use realistic test data
+
+## 📚 Key Files
+
+| File | Purpose |
+|------|---------|
+| `playwright.config.js` | Test configuration |
+| `utils/env.js` | Environment loader |
+| `pages/base.page.js` | Base page class |
+| `tests/e2e/` | E2E test files |
+| `tests/perfromance/` | K6 performance tests |
+| `env/.env.*` | Environment configs |
+
+## 🎯 Best Practices
+
+- **Page Objects**: Encapsulate page interactions
+- **Test Data**: Use fixtures for non-sensitive data
+- **Environment**: Keep credentials in `.env` files
+- **Debugging**: Use `await page.pause()` for inspection
+- **Performance**: Start with low VU counts
+- **Reporting**: Check Ortoni reports for insights
+
+---
+
+**Quick Start**: `npm run setup && npm test`  
+**Full Documentation**: See `README.md` and `DOCUMENTATION.md`

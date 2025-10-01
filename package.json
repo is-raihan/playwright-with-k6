@@ -1,9 +1,39 @@
 {
-  "name": "pippasync",
+  "name": "pippasync-test-automation",
   "version": "1.0.0",
   "private": true,
-  "description": "Playwright-based end-to-end tests for PippaSync.",
+  "description": "Comprehensive test automation framework combining Playwright for E2E testing and K6 for performance testing for the PippaSync application.",
   "main": "index.js",
+  "homepage": "https://github.com/your-username/playwright-with-k6#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/playwright-with-k6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/playwright-with-k6/issues"
+  },
+  "keywords": [
+    "playwright",
+    "k6",
+    "testing",
+    "automation",
+    "e2e",
+    "performance",
+    "pippasync",
+    "test-automation",
+    "ci-cd",
+    "ortoni-report"
+  ],
+  "author": {
+    "name": "Raihan Khan",
+    "email": "raihan@example.com",
+    "url": "https://github.com/raihan-khan"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
   "scripts": {
     "test": "playwright test",
     "posttest": "sh -c 'if [ -z \"$CI\" ] && [ -f ortoni-report/ortoni-report.html ]; then (open ortoni-report/ortoni-report.html || xdg-open ortoni-report/ortoni-report.html || start ortoni-report/ortoni-report.html); fi'",
@@ -17,13 +47,12 @@
     "k6:stage": "mkdir -p k6-results && NODE_ENV=stage k6 run tests/perfromance/auth.k6.js",
     "k6:prod": "mkdir -p k6-results && NODE_ENV=prod k6 run tests/perfromance/auth.k6.js",
     "k6:report": "open k6-results/summary.html || xdg-open k6-results/summary.html || start k6-results/summary.html",
-    "test:all": "playwright test && mkdir -p k6-results && k6 run tests/perfromance/auth.k6.js"
-  },
-  "keywords": [],
-  "author": "Raihan Khan",
-  "license": "ISC",
-  "engines": {
-    "node": ">=18"
+    "test:all": "playwright test && mkdir -p k6-results && k6 run tests/perfromance/auth.k6.js",
+    "lint": "echo 'Linting not configured yet'",
+    "format": "echo 'Formatting not configured yet'",
+    "clean": "rm -rf playwright-report test-results ortoni-report k6-results",
+    "setup": "npm install && npx playwright install",
+    "ci": "npm test && npm run k6"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
@@ -33,5 +62,20 @@
   },
   "dependencies": {
     "dotenv": "^17.2.1"
+  },
+  "files": [
+    "tests/",
+    "pages/",
+    "utils/",
+    "fixtures/",
+    "playwright.config.js",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/raihan-khan"
   }
 }
