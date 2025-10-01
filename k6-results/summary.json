@@ -1,41 +1,6 @@
 {
-  "root_group": {
-    "name": "",
-    "path": "",
-    "id": "d41d8cd98f00b204e9800998ecf8427e",
-    "groups": [],
-    "checks": [
-        {
-          "fails": 0,
-          "name": "response received",
-          "path": "::response received",
-          "id": "e736e98faf37420ee43cdb8deeadf89c",
-          "passes": 314
-        },
-        {
-          "name": "has body",
-          "path": "::has body",
-          "id": "28dd0656b9726bb64162042fc8e01a34",
-          "passes": 314,
-          "fails": 0
-        },
-        {
-          "passes": 314,
-          "fails": 0,
-          "name": "has success property",
-          "path": "::has success property",
-          "id": "96a548f11a42b35c6deb6b3ce42a6392"
-        },
-        {
-          "name": "has message property",
-          "path": "::has message property",
-          "id": "a5101b02afa779e8eb9169ded9d8df35",
-          "passes": 314,
-          "fails": 0
-        }
-      ]
-  },
   "options": {
+    "noColor": false,
     "summaryTrendStats": [
       "avg",
       "min",
@@ -44,37 +9,22 @@
       "p(90)",
       "p(95)"
     ],
-    "summaryTimeUnit": "",
-    "noColor": false
+    "summaryTimeUnit": ""
   },
   "state": {
     "isStdOutTTY": true,
     "isStdErrTTY": true,
-    "testRunDurationMs": 120495.008
+    "testRunDurationMs": 120554.432
   },
   "metrics": {
-    "failed_requests": {
-      "type": "rate",
-      "contains": "default",
-      "values": {
-        "passes": 0,
-        "fails": 314,
-        "rate": 0
-      },
-      "thresholds": {
-        "rate<0.3": {
-          "ok": true
-        }
-      }
-    },
     "login_duration": {
       "values": {
-        "p(95)": 484.4734145501294,
-        "avg": 352.8731098931011,
-        "min": 200.57076665065188,
-        "med": 353.98555059432204,
-        "max": 499.62979486024443,
-        "p(90)": 475.6820016854917
+        "avg": 338.8920448304088,
+        "min": 201.62716854713875,
+        "med": 328.62506735607195,
+        "max": 497.4277852195161,
+        "p(90)": 462.5750859408813,
+        "p(95)": 486.1423022927139
       },
       "thresholds": {
         "p(95)<1300": {
@@ -88,12 +38,38 @@
       "contains": "default"
     },
     "data_sent": {
+      "type": "counter",
+      "contains": "data",
       "values": {
         "count": 0,
         "rate": 0
-      },
+      }
+    },
+    "iterations": {
       "type": "counter",
-      "contains": "data"
+      "contains": "default",
+      "values": {
+        "count": 317,
+        "rate": 2.629517594176878
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 1268,
+        "fails": 0,
+        "rate": 1
+      }
+    },
+    "vus": {
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 5
+      },
+      "type": "gauge",
+      "contains": "default"
     },
     "data_received": {
       "type": "counter",
@@ -104,76 +80,100 @@
       }
     },
     "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
       "values": {
-        "p(90)": 0,
-        "p(95)": 0,
         "avg": 0,
         "min": 0,
         "med": 0,
-        "max": 0
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
       },
       "thresholds": {
         "p(95)<1300": {
           "ok": true
         }
+      }
+    },
+    "failed_requests": {
+      "contains": "default",
+      "values": {
+        "passes": 0,
+        "fails": 317,
+        "rate": 0
       },
-      "type": "trend",
-      "contains": "time"
+      "thresholds": {
+        "rate<0.3": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "successful_logins": {
+      "contains": "default",
+      "values": {
+        "count": 317,
+        "rate": 2.629517594176878
+      },
+      "type": "counter"
     },
     "vus_max": {
-      "type": "gauge",
-      "contains": "default",
       "values": {
         "min": 5,
         "max": 5,
         "value": 5
-      }
+      },
+      "type": "gauge",
+      "contains": "default"
     },
     "iteration_duration": {
       "type": "trend",
       "contains": "time",
       "values": {
-        "p(95)": 2351.0507562499997,
-        "avg": 1491.8046698471323,
-        "min": 504.865959,
-        "med": 1508.7512080000001,
-        "max": 2498.897458,
-        "p(90)": 2245.0722410000003
-      }
-    },
-    "checks": {
-      "type": "rate",
-      "contains": "default",
-      "values": {
-        "fails": 0,
-        "rate": 1,
-        "passes": 1256
-      }
-    },
-    "successful_logins": {
-      "type": "counter",
-      "contains": "default",
-      "values": {
-        "count": 314,
-        "rate": 2.6059170849633873
-      }
-    },
-    "vus": {
-      "type": "gauge",
-      "contains": "default",
-      "values": {
-        "value": 1,
-        "min": 1,
-        "max": 5
-      }
-    },
-    "iterations": {
-      "type": "counter",
-      "contains": "default",
-      "values": {
-        "count": 314,
-        "rate": 2.6059170849633873
+        "avg": 1479.1883745268146,
+        "min": 505.806917,
+        "med": 1466.937833,
+        "max": 2489.840875,
+        "p(90)": 2285.7285996,
+        "p(95)": 2383.9704256
       }
     }
+  },
+  "root_group": {
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "passes": 317,
+          "fails": 0,
+          "name": "response received",
+          "path": "::response received",
+          "id": "e736e98faf37420ee43cdb8deeadf89c"
+        },
+        {
+          "fails": 0,
+          "name": "has body",
+          "path": "::has body",
+          "id": "28dd0656b9726bb64162042fc8e01a34",
+          "passes": 317
+        },
+        {
+          "name": "has success property",
+          "path": "::has success property",
+          "id": "96a548f11a42b35c6deb6b3ce42a6392",
+          "passes": 317,
+          "fails": 0
+        },
+        {
+          "id": "a5101b02afa779e8eb9169ded9d8df35",
+          "passes": 317,
+          "fails": 0,
+          "name": "has message property",
+          "path": "::has message property"
+        }
+      ],
+    "name": ""
   }
 }
